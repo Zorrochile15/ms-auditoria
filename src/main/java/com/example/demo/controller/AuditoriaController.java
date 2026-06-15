@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Auditoria;
-import com.example.demo.repository.AuditoriaRepository;
+import com.example.demo.service.AuditoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -12,15 +12,15 @@ import java.util.List;
 public class AuditoriaController {
 
     @Autowired
-    private AuditoriaRepository repository;
+    private AuditoriaService service;
 
     @PostMapping
     public Auditoria registrarActividad(@RequestBody Auditoria auditoria) {
-        return repository.save(auditoria);
+        return service.registrarActividad(auditoria);
     }
 
     @GetMapping("/expediente/{expedienteId}")
     public List<Auditoria> obtenerTimeline(@PathVariable Long expedienteId) {
-        return repository.findByExpedienteIdOrderByFechaDesc(expedienteId);
+        return service.obtenerTimeline(expedienteId);
     }
 }

@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Usuario;
-import com.example.demo.repository.UsuarioRepository;
+import com.example.demo.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     @Autowired
-    private UsuarioRepository repository;
+    private AuthService service;
 
     @PostMapping("/login")
     public ResponseEntity<Usuario> login(@RequestBody Usuario credenciales) {
-        return repository.findByUsernameAndPassword(credenciales.getUsername(), credenciales.getPassword())
+        return service.login(credenciales.getUsername(), credenciales.getPassword())
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.status(401).build());
     }
